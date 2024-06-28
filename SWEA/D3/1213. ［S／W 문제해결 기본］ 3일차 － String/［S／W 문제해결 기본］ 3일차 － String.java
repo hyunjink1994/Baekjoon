@@ -1,47 +1,35 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
+import java.io.*;
+
 
 public class Solution {
-    public static void printMemoryUsage(){
-        Runtime runtime = Runtime.getRuntime();
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        System.out.println("Memory Usage : "
-        + (runtime.totalMemory() - runtime.freeMemory())/1024/1024
-        + " mb");
+        for(int tc = 0; tc<10 ;tc++){
+            st = new StringTokenizer(br.readLine());
+            int case_number = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(br.readLine());
+            String find_str = st.nextToken();
+            st = new StringTokenizer(br.readLine());
+            String str = st.nextToken();
+            System.out.printf("#%d %d\n", case_number , SolutionAnswer(str, find_str));
+        }
     }
 
+    public static int SolutionAnswer(String str, String find_str){
+        int answer = 0;
+        int str_length = str.length();
+        int find_str_length = find_str.length();
+//        System.out.printf("str_length : %d , find_str_length : %d",str.length(), find_str.length());
 
-    public static void main(String[] args) throws IOException {
-        long startTime = System.currentTimeMillis();
-
-//        System.setIn(new FileInputStream("SWEA/src/input.txt"));
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-        int T = 10;
-
-        for (int tc = 0; tc < T ; tc++) {
-            String testCase = bufferedReader.readLine();
-            String check = bufferedReader.readLine();
-            String arr = bufferedReader.readLine();
-
-            int answer = 0;
-
-            for (int i = 0; i < arr.length() - check.length()+1; i++) {
-                if(arr.substring(i,i+check.length()).equals(check)){
-                    answer ++;
-                }
+        for(int i=0; i < str_length-find_str_length+1; i++){
+            boolean equal = (str.substring(i,i+find_str_length).equals(find_str));
+            if(equal){
+                answer++;
             }
-
-
-            System.out.printf("#%s %d\n", testCase, answer);
         }
-
-        long endTime = System.currentTimeMillis();
-//        System.out.println("Time : " + (endTime - startTime) + " ms");
-//        printMemoryUsage();
-
-
+        return answer;
     }
 }
